@@ -34,6 +34,9 @@ RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositori
     tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz && \
     rm ~/mule-standalone-${MULE_VERSION}.tar.gz
 
+# To use MuleSoft EE 
+COPY /opt/mule/conf/muleLicenseKey.lic /opt/mule/conf/muleLicenseKey.lic
+
 # Define mount points.
 VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
 
