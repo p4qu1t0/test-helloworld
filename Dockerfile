@@ -1,4 +1,4 @@
-ROM anapsix/alpine-java:8_jdk_nashorn
+FROM anapsix/alpine-java:8_jdk_nashorn
 
 # Define environment variables.
 ENV MULE_HOME=/opt/mule MULE_VERSION=4.4.0 MULE_MD5=1d80bbd88bb0d65006282817dd551743 TZ=Europe/Madrid MULE_USER=mule
