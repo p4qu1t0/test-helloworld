@@ -8,7 +8,7 @@ RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certifica
 
 RUN adduser -D -g "" ${MULE_USER} ${MULE_USER}
 
-RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION} ln -s /opt/mule/mule-standalone-${MULE_VERSION} ${MULE_HOME} chown ${MULE_USER}:${MULE_USER} -R /opt/mule*
+RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION} ln /opt/mule/mule-standalone-${MULE_VERSION} ${MULE_HOME} chown ${MULE_USER}:${MULE_USER} /opt/mule*
 
 RUN echo ${TZ} > /etc/timezone
 
