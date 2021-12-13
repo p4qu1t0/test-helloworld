@@ -1,3 +1,5 @@
+RUN echo "$PWD"
+
 FROM java:openjdk-8-jdk
 
 # Define environment variables.
@@ -8,12 +10,6 @@ ENV TZ=Europe/Madrid
 ENV MULE_USER=mule
 
 WORKDIR $MULE_HOME
-
-#Volumes
-VOLUME ./apps $MULE_HOME/apps
-VOLUME ./conf $MULE_HOME/conf
-VOLUME ./domains $MULE_HOME/domains
-VOLUME ./logs $MULE_HOME/logs
 
 # SSL Cert for downloading mule zip
 #RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
@@ -27,7 +23,7 @@ USER ${MULE_USER}
 
 #RUN apt-get update
 
-RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION}
+RUN mkdir -p ./mule-standalone-${MULE_VERSION}
 RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}/mule-standalone-${MULE_VERSION}
 
 #RUN chown -R ${MULE_USER}:${MULE_USER} /etc/timezone
@@ -51,7 +47,7 @@ RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 RUN echo "$PWD"
-COPY ./conf/muleLicenseKey $MULE_HOME/conf/muleLicenseKey
+COPY ./conf/muleLicenseKey ${MULE_HOME}/conf/muleLicenseKey
 RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey
 
 #Check if Mule License installed
