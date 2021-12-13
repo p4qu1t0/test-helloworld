@@ -22,6 +22,8 @@ USER ${MULE_USER}
 RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION}
 RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}/mule-standalone-${MULE_VERSION}
 
+RUN chown -R ${MULE_USER}:${MULE_USER} /etc/timezone
+RUN chmod 755 /etc/timezone
 RUN echo ${TZ} > /etc/timezone
 
 # Checksum
