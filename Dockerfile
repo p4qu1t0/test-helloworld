@@ -10,10 +10,10 @@ ENV MULE_USER=mule
 WORKDIR $MULE_HOME
 
 #Volumes
-VOLUME $MULE_HOME/apps
-VOLUME $MULE_HOME/conf
-VOLUME $MULE_HOME/domains
-VOLUME $MULE_HOME/logs
+VOLUME ./apps $MULE_HOME/apps
+VOLUME ./conf $MULE_HOME/conf
+VOLUME ./domains $MULE_HOME/domains
+VOLUME ./logs $MULE_HOME/logs
 
 # SSL Cert for downloading mule zip
 #RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
@@ -51,7 +51,7 @@ RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 RUN echo "$PWD"
-COPY muleLicenseKey mule/conf/muleLicenseKey
+COPY ./conf/muleLicenseKey $MULE_HOME/conf/muleLicenseKey
 RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey
 
 #Check if Mule License installed
