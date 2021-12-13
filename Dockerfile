@@ -56,8 +56,7 @@ CMD echo "----- Copy and install license -----"
 WORKDIR ${JENKINS_WORKSPACE}
 COPY conf/muleLicenseKey.lic /opt/mule/conf/
 
-WORKDIR ${MULE_HOME}
-RUN bin/mule -installLicense conf/muleLicenseKey.lic
+RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 #RUN ls -ltr $MULE_HOME/conf/
