@@ -45,7 +45,7 @@ CMD echo "${MULE_MD5} mule-standalone-${MULE_VERSION}.tar.gz"
 #		&& mv ${MULE_HOME}/mule-standalone-${MULE_VERSION} ${MULE_HOME}
 
 RUN tar xvzf ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
-RUN ln -s ${MULE_HOME}/mule-standalone-${MULE_VERSION}/ mule
+RUN ln -s ${MULE_HOME}/mule-standalone-${MULE_VERSION}/ ${MULE_HOME}
 RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 
 # Define mount points.
@@ -54,16 +54,16 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 WORKDIR ${JENKINS_WORKSPACE}
-COPY conf/muleLicenseKey.lic ${MULE_HOME}/mule-standalone-${MULE_VERSION}/conf/
+COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/
+#Copy and deploy mule application in runtime
+ADD target/${MULE_APP} ${MULE_HOME}/apps/
 
-RUN ${MULE_HOME}/mule-standalone-${MULE_VERSION}/bin/mule -installLicense ${MULE_HOME}/mule-standalone-${MULE_VERSION}/conf/muleLicenseKey.lic
+WORKDIR ${MULE_HOME}
+RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 #RUN ls -ltr $MULE_HOME/conf/
 #CMD echo "---- License installed ! ----"
-
-#Copy and deploy mule application in runtime
-ADD target/${MULE_APP} ${MULE_HOME}/apps/
 
 #CMD [ "/opt/mule/bin/mule"]
 ENTRYPOINT ["${MULE_HOME}/bin/mule"]
