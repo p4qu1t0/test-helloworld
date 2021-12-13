@@ -7,6 +7,12 @@ ENV MULE_MD5=84f9f9bd23c71b248f295d894e41fb01
 ENV TZ=Europe/Madrid
 ENV MULE_USER=mule
 
+#Volumes
+VOLUME $MULE_HOME/apps
+VOLUME $MULE_HOME/conf
+VOLUME $MULE_HOME/domains
+VOLUME $MULE_HOME/logs
+
 # SSL Cert for downloading mule zip
 #RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
 
@@ -30,13 +36,20 @@ USER ${MULE_USER}
 
 # Checksum
 #RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz echo "${MULE_MD5}  mule-standalone-${MULE_VERSION}.tar.gz" | md5sum -c cd /opt tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz rm ~/mule-standalone-${MULE_VERSION}.tar.gz
-RUN cd ${MULE_HOME} && wget https://repository.mulesoft.org/nexus/service/local/repositories/releases/content/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz echo "${MULE_MD5}  mule-standalone-${MULE_VERSION}.tar.gz" | md5sum -c tar xvzf ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
+RUN cd ${MULE_HOME} && wget https://repository.mulesoft.org/nexus/service/local/repositories/releases/content/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz echo "${MULE_MD5} mule-standalone-${MULE_VERSION}.tar.gz"
+
+RUN set -x \
+		&& cd ${MULE_HOME} \
+		&& tar xvzf ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz \
+		&& mv ${MULE_HOME}/mule-standalone-${MULE_VERSION} /opt/mule
+    
+RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 
 # To use MuleSoft EE 
 COPY /opt/mule/conf/muleLicenseKey.lic /opt/mule/conf/muleLicenseKey.lic
 
 #Copy and deploy mule application in runtime
-COPY /opt/mule/app/mule-hello.jar $MULE_HOME/apps/
+COPY /opt/mule/apps/test-helloword-1.0.1-mule-application.jar $MULE_HOME/apps/
 
 # Define mount points.
 VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
