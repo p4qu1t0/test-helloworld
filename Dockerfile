@@ -52,8 +52,8 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 WORKDIR ${MULE_HOME}
-ADD /opt/mule/conf/muleLicenseKey.lic conf/muleLicenseKey.lic
-RUN /opt/mule/bin/mule -installLicense conf/muleLicenseKey.lic
+ADD ./muleLicenseKey.lic /opt/mule/conf/
+RUN /bin/mule -installLicense conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 #RUN ls -ltr $MULE_HOME/conf/
