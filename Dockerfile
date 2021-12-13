@@ -44,10 +44,13 @@ RUN set -x \
     
 RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 
+# Define mount points.
+VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
+
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 RUN echo "$PWD"
-COPY ./conf/muleLicenseKey ${MULE_HOME}/conf/muleLicenseKey
+COPY ${MULE_HOME}/conf/muleLicenseKey ${MULE_HOME}/conf/muleLicenseKey
 RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey
 
 #Check if Mule License installed
@@ -56,9 +59,6 @@ CMD echo "---- License installed ! ----"
 
 #Copy and deploy mule application in runtime
 COPY ${MULE_HOME}/apps/test-helloword-1.0.1-mule-application.jar ${MULE_HOME}/apps/
-
-# Define mount points.
-VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
 
 # Define working directory.
 WORKDIR ${MULE_HOME}
