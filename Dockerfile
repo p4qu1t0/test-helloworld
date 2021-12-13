@@ -66,7 +66,7 @@ RUN bin/mule -installLicense conf/muleLicenseKey.lic
 ADD target/${MULE_APP} ${MULE_HOME}/apps/
 
 #CMD [ "/opt/mule/bin/mule"]
-ENTRYPOINT ["./bin/mule"]
+ENTRYPOINT ["bin/mule"]
 
 # Default http port
 EXPOSE 8081-8082
