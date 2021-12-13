@@ -17,7 +17,7 @@ RUN chmod 755 ${MULE_HOME}
 
 USER ${MULE_USER}
 
-RUN apt-get update
+#RUN apt-get update
 
 RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION} ln /opt/mule/mule-standalone-${MULE_VERSION} ${MULE_HOME} chown ${MULE_USER}:${MULE_USER} /opt/mule*
 
