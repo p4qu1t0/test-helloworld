@@ -6,6 +6,7 @@ ENV MULE_VERSION=4.4.0
 ENV MULE_MD5=84f9f9bd23c71b248f295d894e41fb01
 ENV TZ=Europe/Madrid
 ENV MULE_USER=mule
+ARG JENKINS_WORKSPACE
 
 RUN echo "$PWD"
 
@@ -52,8 +53,9 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 WORKDIR ${MULE_HOME}
-#ADD ./muleLicenseKey.lic /opt/mule/conf/
-#RUN /bin/mule -installLicense conf/muleLicenseKey.lic
+
+ADD conf/muleLicenseKey.lic /opt/mule/conf/
+RUN /bin/mule -installLicense conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 #RUN ls -ltr $MULE_HOME/conf/
