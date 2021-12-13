@@ -9,7 +9,7 @@ ENV MULE_USER=mule
 
 RUN echo "$PWD"
 
-WORKDIR $MULE_HOME
+WORKDIR ${MULE_HOME}
 
 # SSL Cert for downloading mule zip
 #RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
@@ -59,9 +59,6 @@ RUN pwd
 
 #Copy and deploy mule application in runtime
 COPY ${MULE_HOME}/apps/test-helloword-1.0.1-mule-application.jar ${MULE_HOME}/apps/
-
-# Define working directory.
-WORKDIR ${MULE_HOME}
 
 #CMD [ "/opt/mule/bin/mule"]
 ENTRYPOINT ["./bin/mule"]
