@@ -8,7 +8,7 @@ ENV TZ=Europe/Madrid
 ENV MULE_USER=mule
 
 # SSL Cert for downloading mule zip
-RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
+#RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
 
 RUN adduser -D -g "" ${MULE_USER} ${MULE_USER}
 
