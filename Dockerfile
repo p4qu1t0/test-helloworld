@@ -10,7 +10,9 @@ ENV MULE_USER=mule
 # SSL Cert for downloading mule zip
 #RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
 
-RUN groupadd -g 2000 ${MULE_USER} && useradd -m -u 2001 -g ${MULE_USER} ${MULE_USER}
+RUN useradd -ms ${MULE_HOME} ${MULE_USER}
+RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}
+RUN chmod 755 ${MULE_HOME}
 
 USER ${MULE_USER}
 
