@@ -22,9 +22,11 @@ USER ${MULE_USER}
 RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION}
 RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}/mule-standalone-${MULE_VERSION}
 
-RUN chown -R ${MULE_USER}:${MULE_USER} /etc/timezone
-RUN chmod 755 /etc/timezone
+#RUN chown -R ${MULE_USER}:${MULE_USER} /etc/timezone
+#RUN chmod 755 /etc/timezone
+USER root
 RUN echo ${TZ} > /etc/timezone
+USER ${MULE_USER}
 
 # Checksum
 #RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz echo "${MULE_MD5}  mule-standalone-${MULE_VERSION}.tar.gz" | md5sum -c cd /opt tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz rm ~/mule-standalone-${MULE_VERSION}.tar.gz
