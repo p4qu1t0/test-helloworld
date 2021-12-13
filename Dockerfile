@@ -14,6 +14,8 @@ RUN groupadd -g 2000 ${MULE_USER} && useradd -m -u 2001 -g ${MULE_USER} ${MULE_U
 
 USER ${MULE_USER}
 
+RUN apt-get update
+
 RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION} ln /opt/mule/mule-standalone-${MULE_VERSION} ${MULE_HOME} chown ${MULE_USER}:${MULE_USER} /opt/mule*
 
 RUN echo ${TZ} > /etc/timezone
