@@ -37,11 +37,13 @@ USER ${MULE_USER}
 RUN cd ${MULE_HOME} && wget https://repository.mulesoft.org/nexus/service/local/repositories/releases/content/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz
 CMD echo "${MULE_MD5} mule-standalone-${MULE_VERSION}.tar.gz"
 
-RUN set -x \
-		&& cd ${MULE_HOME} \
-		&& tar xvzf ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz \
-		&& mv ${MULE_HOME}/mule-standalone-${MULE_VERSION} mule
-    
+#RUN set -x \
+#		&& cd ${MULE_HOME} \
+#		&& tar xvzf ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz \
+#		&& mv ${MULE_HOME}/mule-standalone-${MULE_VERSION} ${MULE_HOME}
+
+RUN tar xvzf ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
+RUN ln -s ${MULE_HOME}/mule-standalone-${MULE_VERSION}/ mule
 RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 
 # Define mount points.
@@ -49,9 +51,9 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
-RUN pwd
-#COPY ${MULE_HOME}/conf/muleLicenseKey ${MULE_HOME}/conf/muleLicenseKey
-#RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey
+WORKDIR ${MULE_HOME}
+COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/muleLicenseKey.lic
+RUN bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 #RUN ls -ltr $MULE_HOME/conf/
