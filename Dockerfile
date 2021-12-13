@@ -60,7 +60,7 @@ RUN bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
 #CMD echo "---- License installed ! ----"
 
 #Copy and deploy mule application in runtime
-COPY ${MULE_HOME}/apps/test-helloword-1.0.1-mule-application.jar ${MULE_HOME}/apps/
+COPY apps/test-helloword-1.0.1-mule-application.jar ${MULE_HOME}/apps/
 
 #CMD [ "/opt/mule/bin/mule"]
 ENTRYPOINT ["./bin/mule"]
