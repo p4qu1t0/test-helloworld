@@ -59,14 +59,14 @@ COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/
 ADD target/${MULE_APP} ${MULE_HOME}/apps/
 
 WORKDIR ${MULE_HOME}
-RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
+RUN bin/mule -installLicense conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 #RUN ls -ltr $MULE_HOME/conf/
 #CMD echo "---- License installed ! ----"
 
 #CMD [ "/opt/mule/bin/mule"]
-ENTRYPOINT ["${MULE_HOME}/bin/mule"]
+ENTRYPOINT ["bin/mule"]
 
 # Default http port
 EXPOSE 8081-8082
