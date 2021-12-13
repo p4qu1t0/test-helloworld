@@ -50,12 +50,12 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 RUN pwd
-COPY ${MULE_HOME}/conf/muleLicenseKey ${MULE_HOME}/conf/muleLicenseKey
-RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey
+#COPY ${MULE_HOME}/conf/muleLicenseKey ${MULE_HOME}/conf/muleLicenseKey
+#RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey
 
 #Check if Mule License installed
-RUN ls -ltr $MULE_HOME/conf/
-CMD echo "---- License installed ! ----"
+#RUN ls -ltr $MULE_HOME/conf/
+#CMD echo "---- License installed ! ----"
 
 #Copy and deploy mule application in runtime
 COPY ${MULE_HOME}/apps/test-helloword-1.0.1-mule-application.jar ${MULE_HOME}/apps/
