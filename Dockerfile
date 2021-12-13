@@ -19,7 +19,8 @@ USER ${MULE_USER}
 
 #RUN apt-get update
 
-RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION} chown -R ${MULE_USER}:${MULE_USER} /opt/mule*
+RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION}
+RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}/mule-standalone-${MULE_VERSION}
 
 RUN echo ${TZ} > /etc/timezone
 
