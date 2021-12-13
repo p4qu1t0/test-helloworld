@@ -7,6 +7,7 @@ ENV MULE_MD5=84f9f9bd23c71b248f295d894e41fb01
 ENV TZ=Europe/Madrid
 ENV MULE_USER=mule
 ARG JENKINS_WORKSPACE
+ARG MULE_APP
 
 RUN echo "$PWD"
 
@@ -62,7 +63,7 @@ RUN bin/mule -installLicense conf/muleLicenseKey.lic
 #CMD echo "---- License installed ! ----"
 
 #Copy and deploy mule application in runtime
-#ADD apps/test-helloword-1.0.1-mule-application.jar ${MULE_HOME}/apps/
+ADD target/${MULE_APP} ${MULE_HOME}/apps/
 
 #CMD [ "/opt/mule/bin/mule"]
 ENTRYPOINT ["./bin/mule"]
