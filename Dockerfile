@@ -10,13 +10,13 @@ ENV MULE_USER=mule
 # SSL Cert for downloading mule zip
 #RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
 
-RUN adduser -D -g "" ${MULE_USER} ${MULE_USER}
+RUN groupadd -g 2000 ${MULE_USER} && useradd -m -u 2001 -g ${MULE_USER} ${MULE_USER}
+
+USER ${MULE_USER}
 
 RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION} ln /opt/mule/mule-standalone-${MULE_VERSION} ${MULE_HOME} chown ${MULE_USER}:${MULE_USER} /opt/mule*
 
 RUN echo ${TZ} > /etc/timezone
-
-USER ${MULE_USER}
 
 # Checksum
 #RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz echo "${MULE_MD5}  mule-standalone-${MULE_VERSION}.tar.gz" | md5sum -c cd /opt tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz rm ~/mule-standalone-${MULE_VERSION}.tar.gz
