@@ -55,7 +55,7 @@ CMD echo "----- Copy and install license -----"
 WORKDIR ${JENKINS_WORKSPACE}
 
 COPY conf/muleLicenseKey.lic /opt/mule/conf/
-RUN /bin/mule -installLicense conf/muleLicenseKey.lic
+RUN bin/mule -installLicense conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 #RUN ls -ltr $MULE_HOME/conf/
@@ -68,4 +68,15 @@ RUN /bin/mule -installLicense conf/muleLicenseKey.lic
 ENTRYPOINT ["./bin/mule"]
 
 # Default http port
-EXPOSE 8081
+EXPOSE 8081-8082
+EXPOSE 9000
+EXPOSE 9082
+
+# Mule remote debugger
+EXPOSE 5000
+
+# Mule JMX port (must match Mule config file)
+EXPOSE 1098
+
+# Mule MMC agent port
+EXPOSE 7777
