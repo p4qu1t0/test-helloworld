@@ -59,7 +59,7 @@ COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/
 ADD target/${MULE_APP} ${MULE_HOME}/apps/
 
 WORKDIR ${MULE_HOME}
-RUN bin/mule -installLicense conf/muleLicenseKey.lic
+#RUN bin/mule -installLicense conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 #RUN ls -ltr $MULE_HOME/conf/
