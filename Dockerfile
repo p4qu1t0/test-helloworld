@@ -11,6 +11,7 @@ ENV MULE_USER=mule
 #RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
 
 RUN useradd -ms ${MULE_HOME} ${MULE_USER}
+RUN mkdir -p ${MULE_HOME}
 RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}
 RUN chmod 755 ${MULE_HOME}
 
