@@ -1,5 +1,3 @@
-RUN echo "$PWD"
-
 FROM java:openjdk-8-jdk
 
 # Define environment variables.
@@ -8,6 +6,8 @@ ENV MULE_VERSION=4.4.0
 ENV MULE_MD5=84f9f9bd23c71b248f295d894e41fb01
 ENV TZ=Europe/Madrid
 ENV MULE_USER=mule
+
+RUN echo "$PWD"
 
 WORKDIR $MULE_HOME
 
