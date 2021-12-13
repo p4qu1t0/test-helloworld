@@ -49,7 +49,7 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
-RUN echo "$PWD"
+RUN pwd
 COPY ${MULE_HOME}/conf/muleLicenseKey ${MULE_HOME}/conf/muleLicenseKey
 RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey
 
