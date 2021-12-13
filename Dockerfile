@@ -48,8 +48,8 @@ RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
-COPY ${MULE_HOME}/conf/muleLicenseKey.lic ${MULE_HOME}/conf/
-RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/licenseKeyStore
+COPY ${MULE_HOME}/conf/muleLicenseKey ${MULE_HOME}/conf/
+RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey
 
 #Check if Mule License installed
 RUN ls -ltr $MULE_HOME/conf/
