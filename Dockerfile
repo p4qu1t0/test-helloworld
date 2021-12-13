@@ -1,54 +1,41 @@
 FROM java:openjdk-8-jdk
 
-ENV MULE_HOME /opt/mule
+# Define environment variables.
+ENV MULE_HOME=/opt/mule 
+ENV MULE_VERSION=4.4.0 
+ENV MULE_MD5=84f9f9bd23c71b248f295d894e41fb01
+ENV TZ=Europe/Madrid
+ENV MULE_USER=mule
 
-ADD mule-standalone-4.3.0.zip /opt
-ADD mule-hello.jar /opt
+# SSL Cert for downloading mule zip
+RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
 
-RUN set -x \
-		&& cd /opt \
-		&& unzip mule-standalone-4.3.0.zip \
-		&& mv mule-standalone-4.3.0 mule
-		
-WORKDIR $MULE_HOME
-VOLUME $MULE_HOME/apps
-VOLUME $MULE_HOME/conf
-VOLUME $MULE_HOME/domains
-VOLUME $MULE_HOME/logs
+RUN adduser -D -g "" ${MULE_USER} ${MULE_USER}
 
-#Copy and install license
-#CMD echo "----- Copy and install license -----"
-#COPY licenseKeyStore $MULE_HOME/conf/
+RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION} ln /opt/mule/mule-standalone-${MULE_VERSION} ${MULE_HOME} chown ${MULE_USER}:${MULE_USER} /opt/mule*
 
-# RUN $MULE_HOME/bin/mule -installLicense $MULE_HOME/conf/licenseKeyStore
+RUN echo ${TZ} > /etc/timezone
 
-#Check if Mule License installed
-#RUN ls -ltr $MULE_HOME/conf/
-#CMD echo "---- License installed ! ----"
+USER ${MULE_USER}
+
+# Checksum
+#RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz echo "${MULE_MD5}  mule-standalone-${MULE_VERSION}.tar.gz" | md5sum -c cd /opt tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz rm ~/mule-standalone-${MULE_VERSION}.tar.gz
+RUN cd ~ && wget https://repository.mulesoft.org/nexus/service/local/repositories/releases/content/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz echo "${MULE_MD5}  mule-standalone-${MULE_VERSION}.tar.gz" | md5sum -c cd /opt tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz rm ~/mule-standalone-${MULE_VERSION}.tar.gz
+
+# To use MuleSoft EE 
+COPY /opt/mule/conf/muleLicenseKey.lic /opt/mule/conf/muleLicenseKey.lic
 
 #Copy and deploy mule application in runtime
-CMD echo "---- Deploying mule application in runtime ! ----"
-COPY mule-hello.jar $MULE_HOME/apps/
-RUN ls -ltr $MULE_HOME/apps/
+COPY /opt/mule/app/mule-hello.jar $MULE_HOME/apps/
 
-# HTTP Service Port
-# Expose the necessary port ranges as required by the Mule Apps
-EXPOSE 8081-8091
-EXPOSE 9000
-EXPOSE 9082
+# Define mount points.
+VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
 
-# Mule remote debugger
-EXPOSE 5000
+# Define working directory.
+WORKDIR ${MULE_HOME}
 
-# Mule JMX port (must match Mule config file)
-EXPOSE 1098
-
-# Mule MMC agent port
-EXPOSE 7777
-
-# AMC agent port
-EXPOSE 9997
-
-# Start Mule runtime
-CMD echo "---- Start Mule runtime ----"
+#CMD [ "/opt/mule/bin/mule"]
 ENTRYPOINT ["./bin/mule"]
+
+# Default http port
+EXPOSE 8081
