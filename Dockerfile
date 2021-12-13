@@ -7,6 +7,8 @@ ENV MULE_MD5=84f9f9bd23c71b248f295d894e41fb01
 ENV TZ=Europe/Madrid
 ENV MULE_USER=mule
 
+WORKDIR $MULE_HOME
+
 #Volumes
 VOLUME $MULE_HOME/apps
 VOLUME $MULE_HOME/conf
@@ -48,7 +50,7 @@ RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
-COPY ${MULE_HOME}/conf/muleLicenseKey ${MULE_HOME}/conf/
+ADD ${MULE_HOME}/conf/muleLicenseKey ${MULE_HOME}/conf/muleLicenseKey
 RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey
 
 #Check if Mule License installed
