@@ -50,7 +50,7 @@ RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
-CMD echo pwd
+RUN echo "$pwd"
 ADD ${MULE_HOME}/conf/muleLicenseKey ${MULE_HOME}/conf/muleLicenseKey
 RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey
 
