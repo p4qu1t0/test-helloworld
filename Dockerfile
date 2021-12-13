@@ -42,7 +42,7 @@ CMD echo "${MULE_MD5} mule-standalone-${MULE_VERSION}.tar.gz"
 RUN set -x \
 		&& cd ${MULE_HOME} \
 		&& tar xvzf ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz \
-		&& mv ${MULE_HOME}/mule-standalone-${MULE_VERSION} /opt/mule
+		&& mv ${MULE_HOME}/mule-standalone-${MULE_VERSION} mule
     
 RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 
