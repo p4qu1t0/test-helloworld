@@ -54,8 +54,9 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 WORKDIR ${JENKINS_WORKSPACE}
-
 COPY conf/muleLicenseKey.lic /opt/mule/conf/
+
+WORKDIR ${MULE_HOME}
 RUN bin/mule -installLicense conf/muleLicenseKey.lic
 
 #Check if Mule License installed
