@@ -45,7 +45,7 @@ CMD echo "${MULE_MD5} mule-standalone-${MULE_VERSION}.tar.gz"
 #		&& mv ${MULE_HOME}/mule-standalone-${MULE_VERSION} ${MULE_HOME}
 
 RUN tar xvzf ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
-RUN ln -s ${MULE_HOME}/mule-standalone-${MULE_VERSION}/ ${MULE_HOME}
+RUN ln -s ${MULE_HOME}/mule-standalone-${MULE_VERSION}/ mule
 RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
 
 # Define mount points.
