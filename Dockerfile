@@ -34,19 +34,22 @@ USER root
 CMD echo ${TZ} > /etc/timezone
 USER ${MULE_USER}
 
-# Checksum
-#RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz echo "${MULE_MD5}  mule-standalone-${MULE_VERSION}.tar.gz" | md5sum -c cd /opt tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz rm ~/mule-standalone-${MULE_VERSION}.tar.gz
-RUN cd ${MULE_HOME} && wget https://repository.mulesoft.org/nexus/service/local/repositories/releases/content/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz
-CMD echo "${MULE_MD5} mule-standalone-${MULE_VERSION}.tar.gz"
+# Mule CE
+#RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz \
+#	&& tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz \
+#	&& rm -rf ~/mule-standalone-${MULE_VERSION}.tar.gz \
+#	&& cp -r ~/mule-standalone-${MULE_VERSION}/* /opt/mule/ \
+#	&& rm -rf ~/mule-standalone-${MULE_VERSION}
 
-#RUN set -x \
-#		&& cd ${MULE_HOME} \
-#		&& tar xvzf ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz \
-#		&& mv ${MULE_HOME}/mule-standalone-${MULE_VERSION} ${MULE_HOME}
+# Mule EE
+RUN cd ~ && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
+	&& tar xvzf ~/mule-ee-distribution-${MULE_VERSION}.tar.gz \
+	&& rm -rf ~/mule-ee-distribution-${MULE_VERSION}.tar.gz \
+	&& cp -r ~/mule-ee-distribution-${MULE_VERSION}/* /opt/mule/ \
+	&& rm -rf ~/mule-ee-distribution-${MULE_VERSION}
 
-RUN tar xvzf ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
-RUN ln -s ${MULE_HOME}/mule-standalone-${MULE_VERSION}/ mule
-RUN rm ${MULE_HOME}/mule-standalone-${MULE_VERSION}.tar.gz
+# To use MuleSoft EE 
+COPY /opt/muleconfig/conf/muleLicenseKey.lic ${MULE_HOME}/conf/muleLicenseKey.lic
 
 # Define mount points.
 VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
