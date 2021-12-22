@@ -45,7 +45,7 @@ USER ${MULE_USER}
 RUN cd ~ && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
 CMD echo "${MULE_MD5} ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz"
 RUN tar xvzf ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
-RUN ln -s ~/mule-ee-distribution-standalone-${MULE_VERSION} ${MULE_HOME}
+RUN ln -s ~/mule-ee-distribution-standalone-${MULE_VERSION} ${JENKINS_WORKSPACE}/${MULE_HOME}
 RUN rm -rf ~/mule-ee-distribution-standalone-${MULE_VERSION}
 
 # Define mount points.
@@ -54,19 +54,19 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 WORKDIR ${JENKINS_WORKSPACE}
-COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/
+COPY /opt/muleconf/muleLicenseKey.lic ${JENKINS_WORKSPACE}/${MULE_HOME}/conf/
 #Copy and deploy mule application in runtime
-ADD target/${MULE_APP} ${MULE_HOME}/apps/
+ADD target/${MULE_APP} ${JENKINS_WORKSPACE}/${MULE_HOME}/apps/
 
-WORKDIR ${MULE_HOME}
+WORKDIR ${JENKINS_WORKSPACE}/${MULE_HOME}
 #RUN bin/mule -installLicense conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 #RUN ls -ltr $MULE_HOME/conf/
 #CMD echo "---- License installed ! ----"
 
-CMD [ "/opt/mule/bin/mule"]
-#ENTRYPOINT ["/opt/mule/bin/mule"]
+#CMD [ "/bin/mule"]
+ENTRYPOINT ["/bin/mule"]
 
 # Default http port
 EXPOSE 8081-8082
