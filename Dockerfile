@@ -13,11 +13,11 @@ RUN echo ${TZ} > /etc/timezone
 USER ${MULE_USER}
 
 # Checksum
-RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/4.4.0/mule-standalone-4.4.0.tar.gz \
-	&& tar xvzf ~/mule-standalone-4.4.0.tar.gz \
-	&& rm -rf ~/mule-standalone-4.4.0.tar.gz \
-	&& ln -s ~/mule-standalone-4.4.0 /opt/mule \
-	&& rm -rf ~/mule-standalone-4.4.0
+RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz \
+	&& tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz \
+	&& rm -rf ~/mule-standalone-${MULE_VERSION}.tar.gz \
+	&& cp -r ~/mule-standalone-${MULE_VERSION}/* /opt/mule/ \
+	&& rm -rf ~/mule-standalone-${MULE_VERSION}
 
 # To use MuleSoft EE 
 COPY /opt/muleconfig/conf/muleLicenseKey.lic ${MULE_HOME}/conf/muleLicenseKey.lic
