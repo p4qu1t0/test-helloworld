@@ -16,10 +16,10 @@ WORKDIR ${MULE_HOME}
 # SSL Cert for downloading mule zip
 #RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
 
-RUN useradd -ms ${MULE_HOME} ${MULE_USER}
-RUN mkdir -p ${MULE_HOME}
-RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}
-RUN chmod 755 ${MULE_HOME}
+RUN useradd -ms ${JENKINS_WORKSPACE}${MULE_HOME} ${MULE_USER}
+RUN mkdir -p ${JENKINS_WORKSPACE}${MULE_HOME}
+RUN chown -R ${MULE_USER}:${MULE_USER} ${JENKINS_WORKSPACE}${MULE_HOME}
+RUN chmod 755 ${JENKINS_WORKSPACE}${MULE_HOME}
 
 USER ${MULE_USER}
 
