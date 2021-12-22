@@ -25,8 +25,10 @@ USER ${MULE_USER}
 
 #RUN apt-get update
 
-RUN mkdir -p ./mule-standalone-${MULE_VERSION}
-RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}/mule-standalone-${MULE_VERSION}
+#RUN mkdir -p ./mule-standalone-${MULE_VERSION}
+#RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}/mule-standalone-${MULE_VERSION}
+
+RUN mkdir -p ${JENKINS_WORKSPACE}${MULE_HOME}
 
 #RUN chown -R ${MULE_USER}:${MULE_USER} /etc/timezone
 #RUN chmod 755 /etc/timezone
@@ -45,7 +47,7 @@ USER ${MULE_USER}
 RUN cd ~ && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
 CMD echo "${MULE_MD5} ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz"
 RUN tar xvzf ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
-RUN ln -s ~/mule-ee-distribution-standalone-${MULE_VERSION} ${JENKINS_WORKSPACE}/${MULE_HOME}
+RUN ln -s ~/mule-ee-distribution-standalone-${MULE_VERSION} ${JENKINS_WORKSPACE}${MULE_HOME}
 RUN rm -rf ~/mule-ee-distribution-standalone-${MULE_VERSION}
 
 # Define mount points.
@@ -54,11 +56,11 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 WORKDIR ${JENKINS_WORKSPACE}
-COPY /opt/muleconf/muleLicenseKey.lic ${JENKINS_WORKSPACE}/${MULE_HOME}/conf/
+COPY /opt/muleconf/muleLicenseKey.lic ${JENKINS_WORKSPACE}${MULE_HOME}/conf/
 #Copy and deploy mule application in runtime
 ADD target/${MULE_APP} ${JENKINS_WORKSPACE}/${MULE_HOME}/apps/
 
-WORKDIR ${JENKINS_WORKSPACE}/${MULE_HOME}
+WORKDIR ${JENKINS_WORKSPACE}${MULE_HOME}
 #RUN bin/mule -installLicense conf/muleLicenseKey.lic
 
 #Check if Mule License installed
