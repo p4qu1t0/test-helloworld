@@ -20,7 +20,7 @@ USER ${MULE_USER}
 #	&& rm -rf ~/mule-standalone-${MULE_VERSION}
 
 # Mule EE
-RUN cd ~ && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
+RUN cd ~ && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz \
 	&& tar xvzf ~/mule-ee-distribution-${MULE_VERSION}.tar.gz \
 	&& rm -rf ~/mule-ee-distribution-${MULE_VERSION}.tar.gz \
 	&& cp -r ~/mule-ee-distribution-${MULE_VERSION}/* /opt/mule/ \
