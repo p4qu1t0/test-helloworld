@@ -21,10 +21,10 @@ USER ${MULE_USER}
 
 # Mule EE
 RUN cd ~ && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz \
-	&& tar xvzf ~/mule-ee-distribution-${MULE_VERSION}.tar.gz \
-	&& rm -rf ~/mule-ee-distribution-${MULE_VERSION}.tar.gz \
-	&& cp -r ~/mule-ee-distribution-${MULE_VERSION}/* /opt/mule/ \
-	&& rm -rf ~/mule-ee-distribution-${MULE_VERSION}
+	&& tar xvzf ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz \
+	&& rm -rf ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz \
+	&& cp -r ~/mule-ee-distribution-standalone-${MULE_VERSION}/* /opt/mule/ \
+	&& rm -rf ~/mule-ee-distribution-standalone-${MULE_VERSION}
 
 # To use MuleSoft EE 
 COPY /opt/muleconfig/conf/muleLicenseKey.lic ${MULE_HOME}/conf/muleLicenseKey.lic
