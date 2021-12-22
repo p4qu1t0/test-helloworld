@@ -1,4 +1,4 @@
-FROM anapsix/alpine-java:8_jdk_nashorn
+FROM java:openjdk-8-jdk
 
 # Define environment variables.
 ENV MULE_HOME=/opt/mule MULE_VERSION=4.4.0 MULE_MD5=1d80bbd88bb0d65006282817dd551743 TZ=Europe/Madrid MULE_USER=mule
@@ -8,17 +8,19 @@ RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certifica
 
 RUN adduser -D -g "" ${MULE_USER} ${MULE_USER}
 
-RUN mkdir -p /opt/mule/mule-standalone-${MULE_VERSION} ln /opt/mule/mule-standalone-${MULE_VERSION} ${MULE_HOME} chown ${MULE_USER}:${MULE_USER} /opt/mule*
-
 RUN echo ${TZ} > /etc/timezone
 
 USER ${MULE_USER}
 
 # Checksum
-RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz echo "${MULE_MD5}  mule-standalone-${MULE_VERSION}.tar.gz" | md5sum -c cd /opt tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz rm ~/mule-standalone-${MULE_VERSION}.tar.gz
+RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/4.4.0/mule-standalone-4.4.0.tar.gz \
+	&& tar xvzf ~/mule-standalone-4.4.0.tar.gz \
+	&& rm -rf ~/mule-standalone-4.4.0.tar.gz \
+	&& ln -s ~/mule-standalone-4.4.0 /opt/mule \
+	&& rm -rf ~/mule-standalone-4.4.0
 
 # To use MuleSoft EE 
-COPY /opt/mule/conf/muleLicenseKey.lic /opt/mule/conf/muleLicenseKey.lic
+COPY /opt/muleconfig/conf/muleLicenseKey.lic ${MULE_HOME}/conf/muleLicenseKey.lic
 
 # Define mount points.
 VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
