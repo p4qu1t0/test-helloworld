@@ -43,10 +43,10 @@ USER ${MULE_USER}
 
 # Mule EE
 RUN cd ~ && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
-CMD echo "${MULE_MD5} ~/mule-ee-distribution-${MULE_VERSION}.tar.gz"
-RUN tar xvzf ~/mule-ee-distribution-${MULE_VERSION}.tar.gz
-RUN ln -s ~/mule-ee-distribution-${MULE_VERSION}/* /opt/mule/
-RUN rm -rf ~/mule-ee-distribution-${MULE_VERSION}
+CMD echo "${MULE_MD5} ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz"
+RUN tar xvzf ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
+RUN ln -s ~/mule-ee-distribution-standalone-${MULE_VERSION}/* /opt/mule/
+RUN rm -rf ~/mule-ee-distribution-standalone-${MULE_VERSION}
 
 # Define mount points.
 VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
