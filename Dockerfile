@@ -65,8 +65,8 @@ WORKDIR ${MULE_HOME}
 #RUN ls -ltr $MULE_HOME/conf/
 #CMD echo "---- License installed ! ----"
 
-#CMD [ "/opt/mule/bin/mule"]
-ENTRYPOINT ["/opt/mule/bin/mule"]
+CMD [ "/opt/mule/bin/mule"]
+#ENTRYPOINT ["/opt/mule/bin/mule"]
 
 # Default http port
 EXPOSE 8081-8082
