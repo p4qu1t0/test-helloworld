@@ -48,9 +48,6 @@ RUN tar xvzf ~/mule-ee-distribution-${MULE_VERSION}.tar.gz
 RUN ln -s ~/mule-ee-distribution-${MULE_VERSION}/* /opt/mule/
 RUN rm -rf ~/mule-ee-distribution-${MULE_VERSION}
 
-# To use MuleSoft EE 
-COPY /opt/muleconfig/conf/muleLicenseKey.lic ${MULE_HOME}/conf/muleLicenseKey.lic
-
 # Define mount points.
 VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
 
