@@ -60,9 +60,10 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 
-COPY /opt/muleconfig/muleLicenseKey.lic ${JENKINS_WORKSPACE}${MULE_HOME}/conf/
-#Copy and deploy mule application in runtime
 WORKDIR ${JENKINS_WORKSPACE}
+COPY conf/muleLicenseKey.lic ${JENKINS_WORKSPACE}${MULE_HOME}/conf/
+
+#Copy and deploy mule application in runtime
 ADD target/${MULE_APP} ${JENKINS_WORKSPACE}/${MULE_HOME}/apps/
 
 WORKDIR ${JENKINS_WORKSPACE}${MULE_HOME}
