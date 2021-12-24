@@ -12,15 +12,15 @@ ARG MULE_APP
 RUN echo "$PWD"
 RUN echo "***********JENKINS_WORKSPACE***********:"${JENKINS_WORKSPACE}
 
-WORKDIR ${MULE_HOME}
+WORKDIR ${JENKINS_WORKSPACE}
 
 # SSL Cert for downloading mule zip
 #RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
 
-RUN useradd -ms ${JENKINS_WORKSPACE}${MULE_HOME} ${MULE_USER}
-RUN mkdir -p ${JENKINS_WORKSPACE}${MULE_HOME}
-RUN chown -R ${MULE_USER}:${MULE_USER} ${JENKINS_WORKSPACE}${MULE_HOME}
-RUN chmod 755 ${JENKINS_WORKSPACE}${MULE_HOME}
+RUN useradd -ms . ${MULE_USER}
+RUN mkdir -p ${MULE_HOME}
+RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}
+RUN chmod 755 ${MULE_HOME}
 RUN chown -R ${MULE_USER}:${MULE_USER} ~
 RUN chmod 755 ~
 
@@ -31,7 +31,7 @@ USER ${MULE_USER}
 #RUN mkdir -p ./mule-standalone-${MULE_VERSION}
 #RUN chown -R ${MULE_USER}:${MULE_USER} ${MULE_HOME}/mule-standalone-${MULE_VERSION}
 
-RUN mkdir -p ${JENKINS_WORKSPACE}${MULE_HOME}
+RUN mkdir -p ${MULE_HOME}
 
 #RUN chown -R ${MULE_USER}:${MULE_USER} /etc/timezone
 #RUN chmod 755 /etc/timezone
@@ -51,7 +51,7 @@ USER root
 RUN cd ~ && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
 CMD echo "${MULE_MD5} ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz"
 RUN tar xvzf ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
-RUN ln -s ~/mule-ee-distribution-standalone-${MULE_VERSION} ${JENKINS_WORKSPACE}${MULE_HOME}
+RUN ln -s ~/mule-ee-distribution-standalone-${MULE_VERSION} ${MULE_HOME}
 RUN rm -rf ~/mule-ee-distribution-standalone-${MULE_VERSION}
 
 # Define mount points.
@@ -61,11 +61,11 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 CMD echo "----- Copy and install license -----"
 
 #Copy license
-COPY conf/muleLicenseKey.lic ${JENKINS_WORKSPACE}${MULE_HOME}/conf/
-RUN cd ${JENKINS_WORKSPACE}${MULE_HOME} && echo "$PWD" && sh 'ls -ltra'
+COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/
+RUN cd ${MULE_HOME} && echo "$PWD"
 
 #Copy and deploy mule application in runtime
-ADD target/${MULE_APP} ${JENKINS_WORKSPACE}/${MULE_HOME}/apps/
+ADD target/${MULE_APP} ${MULE_HOME}/apps/
 
 WORKDIR ${JENKINS_WORKSPACE}${MULE_HOME}
 RUN /bin/mule -installLicense /conf/muleLicenseKey.lic
@@ -76,7 +76,7 @@ RUN /bin/mule -installLicense /conf/muleLicenseKey.lic
 
 USER root
 #CMD [ "/bin/mule"]
-ENTRYPOINT ["/opt/mule/bin/mule"]
+ENTRYPOINT ["/bin/mule"]
 
 # Default http port
 EXPOSE 8081-8082
