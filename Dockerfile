@@ -10,6 +10,7 @@ ARG JENKINS_WORKSPACE
 ARG MULE_APP
 
 RUN echo "$PWD"
+RUN echo "***********JENKINS_WORKSPACE***********:${JENKINS_WORKSPACE}"
 
 WORKDIR ${MULE_HOME}
 
@@ -46,13 +47,11 @@ USER ${MULE_USER}
 #	&& rm -rf ~/mule-standalone-${MULE_VERSION}
 
 # Mule EE
-USER root
 RUN cd ~ && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
 CMD echo "${MULE_MD5} ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz"
 RUN tar xvzf ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
 RUN ln -s ~/mule-ee-distribution-standalone-${MULE_VERSION} ${JENKINS_WORKSPACE}${MULE_HOME}
 RUN rm -rf ~/mule-ee-distribution-standalone-${MULE_VERSION}
-USER ${MULE_USER}
 
 # Define mount points.
 VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
@@ -61,13 +60,13 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 CMD echo "----- Copy and install license -----"
 
 WORKDIR ${JENKINS_WORKSPACE}
-COPY conf/muleLicenseKey.lic ${JENKINS_WORKSPACE}${MULE_HOME}/conf/
+COPY /opt/muleconf/muleLicenseKey.lic ${JENKINS_WORKSPACE}${MULE_HOME}/conf/
 
 #Copy and deploy mule application in runtime
 ADD target/${MULE_APP} ${JENKINS_WORKSPACE}/${MULE_HOME}/apps/
 
 WORKDIR ${JENKINS_WORKSPACE}${MULE_HOME}
-#RUN bin/mule -installLicense conf/muleLicenseKey.lic
+RUN /bin/mule -installLicense /conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 #RUN ls -ltr $MULE_HOME/conf/
