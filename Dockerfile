@@ -65,16 +65,15 @@ RUN cd ${MULE_HOME} && echo "$PWD"
 #Copy and deploy mule application in runtime
 ADD target/${MULE_APP} ${MULE_HOME}/apps/
 
-WORKDIR ${JENKINS_WORKSPACE}${MULE_HOME}
-RUN /bin/mule -installLicense /conf/muleLicenseKey.lic
+RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
 
 #Check if Mule License installed
-#RUN ls -ltr $MULE_HOME/conf/
+RUN ls -ltr $MULE_HOME/conf/
 #CMD echo "---- License installed ! ----"
 
-USER root
+#USER root
 #CMD [ "/bin/mule"]
-ENTRYPOINT ["/bin/mule"]
+ENTRYPOINT ["./bin/mule"]
 
 # Default http port
 EXPOSE 8081-8082
