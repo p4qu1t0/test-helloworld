@@ -41,7 +41,6 @@ local.properties
 # --------------- #
 # Studio-specific #
 # --------------- #
-/*
 target/
 .mule/**
 .mule/**/*
