@@ -52,6 +52,7 @@ RUN tar xvzf ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
 RUN ln -s ~/mule-ee-distribution-standalone-${MULE_VERSION} ${MULE_HOME}
 RUN rm -rf ~/mule-ee-distribution-standalone-${MULE_VERSION}
 
+
 # Define mount points.
 VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
 
@@ -60,7 +61,8 @@ CMD echo "----- Copy and install license -----"
 
 #Copy license
 COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/
-RUN cd ${MULE_HOME} && echo "$PWD"
+#RUN cd ${MULE_HOME} && echo "$PWD"
+RUN echo "$PWD"
 
 #Copy and deploy mule application in runtime
 ADD target/${MULE_APP} ${MULE_HOME}/apps/
