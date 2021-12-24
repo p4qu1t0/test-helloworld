@@ -9,6 +9,8 @@ ENV MULE_USER=mule
 ARG JENKINS_WORKSPACE
 ARG MULE_APP
 
+WORKDIR /
+
 # SSL Cert for downloading mule zip
 #RUN apk --no-cache update apk --no-cache upgrade apk --no-cache add ca-certificates update-ca-certificates apk --no-cache add openssl apk add --update tzdata rm -rf /var/cache/apk/*
 
@@ -41,7 +43,8 @@ USER ${MULE_USER}
 
 # Mule EE
 USER root
-RUN cd ${JENKINS_WORKSPACE} && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
+#RUN cd ${JENKINS_WORKSPACE} && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
+RUN wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
 CMD echo "${MULE_MD5} ${JENKINS_WORKSPACE}/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz"
 RUN tar xvzf ${JENKINS_WORKSPACE}/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
 ADD ${JENKINS_WORKSPACE}/mule-ee-distribution-standalone-${MULE_VERSION} ${MULE_HOME}
