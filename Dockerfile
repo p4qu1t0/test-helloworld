@@ -61,6 +61,7 @@ CMD echo "----- Copy and install license -----"
 COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/
 #RUN cd ${MULE_HOME} && echo "$PWD"
 RUN echo "$PWD"
+RUN ls -ltr
 
 #Copy and deploy mule application in runtime
 ADD target/${MULE_APP} ${MULE_HOME}/apps/
