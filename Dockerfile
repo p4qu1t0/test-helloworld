@@ -73,8 +73,9 @@ WORKDIR ${JENKINS_WORKSPACE}${MULE_HOME}
 #RUN ls -ltr $MULE_HOME/conf/
 #CMD echo "---- License installed ! ----"
 
+USER root
 #CMD [ "/bin/mule"]
-ENTRYPOINT ["/bin/mule"]
+ENTRYPOINT ["/opt/mule/bin/mule"]
 
 # Default http port
 EXPOSE 8081-8082
