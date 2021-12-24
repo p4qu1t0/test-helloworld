@@ -47,6 +47,7 @@ USER ${MULE_USER}
 #	&& rm -rf ~/mule-standalone-${MULE_VERSION}
 
 # Mule EE
+USER root
 RUN cd ~ && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
 CMD echo "${MULE_MD5} ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz"
 RUN tar xvzf ~/mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
