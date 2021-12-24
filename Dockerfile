@@ -10,7 +10,7 @@ ARG JENKINS_WORKSPACE
 ARG MULE_APP
 
 RUN echo "$PWD"
-RUN echo "***********JENKINS_WORKSPACE***********:${JENKINS_WORKSPACE}"
+RUN echo "***********JENKINS_WORKSPACE***********:"${JENKINS_WORKSPACE}
 
 WORKDIR ${MULE_HOME}
 
@@ -61,7 +61,7 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 CMD echo "----- Copy and install license -----"
 
 WORKDIR ${JENKINS_WORKSPACE}
-COPY /opt/muleconf/muleLicenseKey.lic ${JENKINS_WORKSPACE}${MULE_HOME}/conf/
+COPY /opt/muleconfig/muleLicenseKey.lic ${JENKINS_WORKSPACE}${MULE_HOME}/conf/
 
 #Copy and deploy mule application in runtime
 ADD target/${MULE_APP} ${JENKINS_WORKSPACE}/${MULE_HOME}/apps/
