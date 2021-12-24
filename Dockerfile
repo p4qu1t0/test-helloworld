@@ -61,7 +61,9 @@ VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_H
 CMD echo "----- Copy and install license -----"
 
 WORKDIR /
-COPY opt/muleconfig/muleLicenseKey.lic ${JENKINS_WORKSPACE}${MULE_HOME}/conf/
+RUN echo "$PWD"
+
+COPY /opt/muleconfig/muleLicenseKey.lic ${JENKINS_WORKSPACE}${MULE_HOME}/conf/
 
 #Copy and deploy mule application in runtime
 ADD target/${MULE_APP} ${JENKINS_WORKSPACE}/${MULE_HOME}/apps/
