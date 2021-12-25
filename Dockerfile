@@ -64,7 +64,7 @@ VOLUME ["${MULE_HOME}/logs"]
 CMD echo "----- Copy and install license -----"
 
 #Copy license
-COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/muleLicenseKey.lic
+COPY ${MULE_HOME}/conf/muleLicenseKey.lic ${MULE_HOME}/conf/muleLicenseKey.lic
 #RUN cd ${MULE_HOME} && echo "$PWD"
 RUN echo "$PWD"
 RUN ls -ltr
