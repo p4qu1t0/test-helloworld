@@ -50,23 +50,16 @@ RUN tar xvzf mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
 RUN mv mule-enterprise-standalone-${MULE_VERSION}/* ${MULE_HOME}
 RUN rm -rf mule-enterprise-standalone-${MULE_VERSION} mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
 
-
-# Define mount points. Why are you use Copy and volume both command use in the dockerfile COPY VOLUME 
-#Copy command is a copy hole the source Folder to the destination Folder
-#or Volume command is a Connected to your folder to container Folder
-#VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
-VOLUME ["${MULE_HOME}/logs"]
-
 #WORKDIR ${MULE_HOME}
 #RUN echo "$PWD"
 
 # To use MuleSoft EE 
-CMD [".${MULE_HOME}/bin/mule -unInstallLicense"]
-RUN rm -rf ${MULE_HOME}/conf/muleLicenseKey.lic
+#CMD [".${MULE_HOME}/bin/mule -unInstallLicense"]
+#RUN rm -rf ${MULE_HOME}/conf/muleLicenseKey.lic
 
 CMD echo "----- Copy and install license -----"
 #Copy license
-COPY /conf/muleLicenseKey.lic ${MULE_HOME}/conf/muleLicenseKey2.lic
+ADD /conf/muleLicenseKey.lic ${MULE_HOME}/conf/
 #RUN cd ${MULE_HOME} && echo "$PWD"
 RUN echo "$PWD"
 RUN ls -ltr
@@ -76,12 +69,20 @@ COPY target/${MULE_APP} ${MULE_HOME}/apps/${MULE_APP}
 
 WORKDIR ${MULE_HOME}
 #RUN /bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
-CMD ["./bin/mule -installLicense /conf/muleLicenseKey2.lic"]
+#CMD ["./bin/mule -installLicense /conf/muleLicenseKey.lic"]
+RUN bin/mule -installLicense conf/muleLicenseKey.lic
+RUN rm -f conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 RUN ls -ltr $MULE_HOME/conf/
 RUN ls -ltr $MULE_HOME/apps/
 #CMD echo "---- License installed ! ----"
+
+# Define mount points. Why are you use Copy and volume both command use in the dockerfile COPY VOLUME 
+#Copy command is a copy hole the source Folder to the destination Folder
+#or Volume command is a Connected to your folder to container Folder
+#VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
+VOLUME ["${MULE_HOME}/logs"]
 
 
 #USER root
