@@ -72,14 +72,15 @@ RUN ls -ltr
 #Copy and deploy mule application in runtime
 COPY target/${MULE_APP} ${MULE_HOME}/apps/${MULE_APP}
 
-RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
+WORKDIR ${MULE_HOME}
+RUN ./bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 RUN ls -ltr $MULE_HOME/conf/
 RUN ls -ltr $MULE_HOME/apps/
 #CMD echo "---- License installed ! ----"
 
-WORKDIR ${MULE_HOME}
+
 #USER root
 #CMD [ "/bin/mule"]
 ENTRYPOINT ["./bin/mule"]
