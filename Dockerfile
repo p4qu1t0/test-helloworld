@@ -73,7 +73,7 @@ RUN ls -ltr
 COPY target/${MULE_APP} ${MULE_HOME}/apps/${MULE_APP}
 
 WORKDIR ${MULE_HOME}
-RUN ./bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
+#RUN ./bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
 
 #Check if Mule License installed
 RUN ls -ltr $MULE_HOME/conf/
