@@ -48,7 +48,7 @@ RUN wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standa
 CMD echo "${MULE_MD5} mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz"
 RUN tar xvzf mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
 RUN mv mule-enterprise-standalone-${MULE_VERSION}/* ${MULE_HOME}
-RUN rm -rf mule-ee-distribution-standalone-${MULE_VERSION}
+RUN rm -rf mule-enterprise-standalone-${MULE_VERSION} mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
 
 
 # Define mount points.
@@ -61,13 +61,13 @@ RUN echo "$PWD"
 CMD echo "----- Copy and install license -----"
 
 #Copy license
-COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/
+COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/*
 #RUN cd ${MULE_HOME} && echo "$PWD"
 RUN echo "$PWD"
 RUN ls -ltr
 
 #Copy and deploy mule application in runtime
-ADD target/${MULE_APP} ${MULE_HOME}/apps/
+COPY target/${MULE_APP} ${MULE_HOME}/apps/*
 
 RUN ${MULE_HOME}/bin/mule -installLicense ${MULE_HOME}/conf/muleLicenseKey.lic
 
