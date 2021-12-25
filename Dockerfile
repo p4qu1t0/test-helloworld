@@ -51,8 +51,11 @@ RUN mv mule-enterprise-standalone-${MULE_VERSION}/* ${MULE_HOME}
 RUN rm -rf mule-enterprise-standalone-${MULE_VERSION} mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
 
 
-# Define mount points.
-VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
+# Define mount points. Why are you use Copy and volume both command use in the dockerfile COPY VOLUME 
+#Copy command is a copy hole the source Folder to the destination Folder
+#or Volume command is a Connected to your folder to container Folder
+#VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
+VOLUME ["${MULE_HOME}/logs"]
 
 WORKDIR ${MULE_HOME}
 RUN echo "$PWD"
