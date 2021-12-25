@@ -57,14 +57,14 @@ RUN rm -rf mule-enterprise-standalone-${MULE_VERSION} mule-ee-distribution-stand
 #VOLUME ["${MULE_HOME}/logs", "${MULE_HOME}/conf", "${MULE_HOME}/apps", "${MULE_HOME}/domains"]
 VOLUME ["${MULE_HOME}/logs"]
 
-WORKDIR ${MULE_HOME}
-RUN echo "$PWD"
+#WORKDIR ${MULE_HOME}
+#RUN echo "$PWD"
 
 # To use MuleSoft EE 
 CMD echo "----- Copy and install license -----"
 
 #Copy license
-COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/muleLicenseKey.lic
+COPY conf/muleLicenseKey.lic ${MULE_HOME}/conf/
 #RUN cd ${MULE_HOME} && echo "$PWD"
 RUN echo "$PWD"
 RUN ls -ltr
@@ -79,6 +79,7 @@ RUN ls -ltr $MULE_HOME/conf/
 RUN ls -ltr $MULE_HOME/apps/
 #CMD echo "---- License installed ! ----"
 
+WORKDIR ${MULE_HOME}
 #USER root
 #CMD [ "/bin/mule"]
 ENTRYPOINT ["./bin/mule"]
