@@ -1,4 +1,5 @@
-FROM java:openjdk-8-jdk
+#FROM java:openjdk-8-jdk
+FROM java:8u91-jdk
 
 # Define environment variables.
 ENV MULE_HOME=/opt/mule 
