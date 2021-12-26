@@ -1,0 +1,87 @@
+pipeline {
+    agent {label 'SlaveNodeJenkins'}
+    environment {
+        imageName = "test-helloworld-mule"
+        registryCredentialsNexus = 'NEXUS_CREDENTIAL'
+        dockerImage = ''
+        registryCredentialsDockerhub = 'DockerHub'
+        
+    }    
+    stages {
+        stage('Jenkins current workspace') {
+            steps {
+                // When using a GString at least later Jenkins versions could only handle the env.WORKSPACE variant:
+                echo "Current workspace is ${env.WORKSPACE}"
+    
+                // the current Jenkins instances will support the short syntax, too:
+                echo "Current workspace is $WORKSPACE"
+            }
+        }
+        stage('Copy files in workspace') {
+            steps {
+                dir("/opt/muleconfig/conf") {
+                    fileOperations([fileCopyOperation(excludes: '', flattenFiles: true, includes: 'muleLicenseKey.lic', targetLocation: "${WORKSPACE}/conf")])
+                }
+            }
+        }
+        stage('Code Checkout') {
+            steps {
+                //git branch: 'comunityEdition',  //Community Edition
+                git branch: 'enterpriseEdition-sinLicencia',  //Enterprise Edition
+                credentialsId: 'git',
+				url: 'https://github.com/p4qu1t0/test-helloworld.git'
+            }
+        }  
+        // Build 
+        stage('Build') {
+            steps {
+               sh "mvn -B -U -e -V clean -DskipTests package"
+            }
+        }        
+        // Retrieve app name
+        stage('Retrieve app.jar name') {
+            steps {
+                script {
+                    pom = readMavenPom file: "pom.xml";
+                    filesByGlob = findFiles(glob: "target/*.jar");
+                }
+            }
+        }
+
+         stage('Push Docker Images to Nexus Registry') {
+          steps{
+            script {
+                //docker.withRegistry( 'http://192.168.1.100:1111/nexus/repository/docker-repository/', registryCredentialsNexus ) {
+                docker.withRegistry( 'http://192.168.1.100:1111/nexus/repository/docker-repository/', registryCredentialsNexus ) {
+                    dockerImage = docker.build ("muletest:1.0.1", "--build-arg JENKINS_WORKSPACE=${env.WORKSPACE} --build-arg MULE_APP=${filesByGlob[0].name} .")
+                    dockerImage.push()
+                }
+            }
+          }
+        }  
+        
+//       stage('Push Docker Images to DockerHub') {
+//          steps{
+//            script {
+//              dockerImage = docker.build (  "p4qu1t0/muletest:${env.BUILD_ID}", "--build-arg JENKINS_WORKSPACE=${env.WORKSPACE} --build-arg MULE_APP=${filesByGlob[0].name} .")
+//              docker.withRegistry( '', registryCredentialsDockerhub ) {
+//                dockerImage.push()
+//              }
+//            }
+//          }
+//        }        
+ 
+        stage('Run Docker Container') {
+            steps{
+                script {
+                    //sh 'docker run -d --name muletest_${env.BUILD_NUMBER} -p "8081:8081" -v /opt/mule/apps:/opt/mule/apps -v /opt/mule/logs:/opt/mule/logs muletest:1.0.1'
+                    //docker.image('muletest:1.0.1').withRun('-p "8081:8081" -v /opt/mule/apps:/opt/mule/apps -v /opt/mule/logs:/opt/mule/logs muletest:1.0.1')
+                    //docker.image('muletest_1_0_1').withRun('-p "8081:8081" -v "/opt/mule/apps:/opt/mule/apps" -v "/opt/mule/logs:/opt/mule/logs" muletest:1.0.1"')
+                    sh 'cd ${JENKINS_WORKSPACE} && ls -ltr'
+                    //sh "docker run -d --name muletestESB -p 8081:8081 -v /opt/muleconfig/apps:/opt/mule/apps -v /opt/muleconfig/logs:/opt/mule/logs muletest:1.0.1"
+                    sh "docker run -d --name muletestESB -p 8081:8081 -v /opt/muleconfig/logs:/opt/mule/logs muletest:1.0.1"
+                }
+            }
+        }          
+    }
+}
