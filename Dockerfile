@@ -42,14 +42,21 @@ USER ${MULE_USER}
 #	&& cp -r ~/mule-standalone-${MULE_VERSION}/* /opt/mule/ \
 #	&& rm -rf ~/mule-standalone-${MULE_VERSION}
 
-# Mule EE
+#Mule CE
 USER root
-#RUN cd ${JENKINS_WORKSPACE} && wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
-RUN wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
-CMD echo "${MULE_MD5} mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz"
-RUN tar xvzf mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
-RUN mv mule-enterprise-standalone-${MULE_VERSION}/* ${MULE_HOME}
-RUN rm -rf mule-enterprise-standalone-${MULE_VERSION} mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
+RUN wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz
+CMD echo "${MULE_MD5} mule-standalone-${MULE_VERSION}.tar.gz"
+RUN tar xvzf mule-standalone-${MULE_VERSION}.tar.gz
+RUN mv mule-standalone-${MULE_VERSION}/* ${MULE_HOME}
+RUN rm -rf mule-standalone-${MULE_VERSION} mule-standalone-${MULE_VERSION}.tar.gz
+
+# Mule EE
+#USER root
+#RUN wget https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-4.4.0.tar.gz
+#CMD echo "${MULE_MD5} mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz"
+#RUN tar xvzf mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
+#RUN mv mule-enterprise-standalone-${MULE_VERSION}/* ${MULE_HOME}
+#RUN rm -rf mule-enterprise-standalone-${MULE_VERSION} mule-ee-distribution-standalone-${MULE_VERSION}.tar.gz
 
 #WORKDIR ${MULE_HOME}
 #RUN echo "$PWD"
