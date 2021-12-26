@@ -35,12 +35,14 @@ USER root
 CMD echo ${TZ} > /etc/timezone
 USER ${MULE_USER}
 
-# Mule CE
-#RUN cd ~ && wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz \
-#	&& tar xvzf ~/mule-standalone-${MULE_VERSION}.tar.gz \
-#	&& rm -rf ~/mule-standalone-${MULE_VERSION}.tar.gz \
-#	&& cp -r ~/mule-standalone-${MULE_VERSION}/* /opt/mule/ \
-#	&& rm -rf ~/mule-standalone-${MULE_VERSION}
+#Mule CE
+#USER root
+#RUN wget https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/${MULE_VERSION}/mule-standalone-${MULE_VERSION}.tar.gz
+#CMD echo "${MULE_MD5} mule-standalone-${MULE_VERSION}.tar.gz"
+#RUN tar xvzf mule-standalone-${MULE_VERSION}.tar.gz
+#RUN mv mule-standalone-${MULE_VERSION}/* ${MULE_HOME}
+#RUN rm -rf mule-standalone-${MULE_VERSION} mule-standalone-${MULE_VERSION}.tar.gz
+
 
 # Mule EE
 USER root
