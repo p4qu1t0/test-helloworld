@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>com.mycompany</groupId>
 	<artifactId>test-helloword</artifactId>
 	<version>1.0.2</version>
 	<packaging>mule-application</packaging>
-
 	<name>test-helloworld</name>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<app.runtime>4.4.0-20211026</app.runtime>
+		<app.runtime>4.4.0</app.runtime>
 		<mule.maven.plugin.version>3.5.2</mule.maven.plugin.version>
+		<!-- ANYPOINT -->
+		<connectedApp.clientId>${CONNECTED_APP_CLIENT_ID}</connectedApp.clientId>
+		<connectedApp.clientSecret>${CONNECTED_APP_CLIENT_SECRET}</connectedApp.clientSecret>
+		<anypoint.uri>https://anypoint.mulesoft.com</anypoint.uri>
+		<!-- CLOUDHUB -->
+		<cloudhub.masterBusinessGroupId>${CH_ORGID}</cloudhub.masterBusinessGroupId>
+		<cloudhub.businessGroupId>${CH_BGID}</cloudhub.businessGroupId>
+		<cloudhub.businessGroup>${CH_BG_NAME}</cloudhub.businessGroup>
+		<cloudhub.environment>${CH_ENV}</cloudhub.environment>
+		<cloudhub.region>${CH_RGN}</cloudhub.region>
+		<cloudhub.workerType>${CH_WORKERTYPE}</cloudhub.workerType>
+		<cloudhub.workers>${CH_WORKERS}</cloudhub.workers>
+		<cloudhub.clientId>${CH_CLIENT_ID}</cloudhub.clientId>
+		<cloudhub.clientSecret>${CH_CLIENT_SECRET}</cloudhub.clientSecret>
+		<cloudhub.applicationName>${CH_APPLICATION_NAME}</cloudhub.applicationName>
+		<cloudhub.monitoringEnabled>${CH_MONITORING_ENABLED}</cloudhub.monitoringEnabled>
+		<cloudhub.skipDeploymentVerification>${CH_SKIP_DEPLOYMENT_VERIFICATION}</cloudhub.skipDeploymentVerification>
 	</properties>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -29,10 +43,45 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>default-install</id>
+						<phase>none</phase>
+					</execution>
+					<execution>
+						<id>deploy</id>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+						<configuration>
+							<classifier>mule-application</classifier>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<cloudHubDeployment>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<muleVersion>4.4.0</muleVersion>
+						<connectedAppGrantType>client_credentials</connectedAppGrantType>
+						<connectedAppClientId>${connectedApp.clientId}</connectedAppClientId>
+						<connectedAppClientSecret>${connectedApp.clientSecret}</connectedAppClientSecret>
+						<connectedAppGrantType>client_credentials</connectedAppGrantType>
+						<applicationName>${cloudhub.application.name}</applicationName>
+						<environment>${environment}</environment>
+						<region>us-east-2</region>
+						<workers>1</workers>
+						<workerType>MICRO</workerType>
+						<objectStoreV2>true</objectStoreV2>
+						<properties>
+							<api.autodiscoveryid>${cloudhub.api.id}</api.autodiscoveryid>
+							<anypoint.platform.client_id>${cloudhub.env.id}</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>${cloudhub.env.secret}</anypoint.platform.client_secret>
+						</properties>
+					</cloudHubDeployment>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
@@ -47,7 +96,6 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 	</dependencies>
-
 	<repositories>
 		<repository>
 			<id>anypoint-exchange-v2</id>
@@ -62,7 +110,6 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
-
 	<pluginRepositories>
 		<pluginRepository>
 			<id>mulesoft-releases</id>
@@ -74,5 +121,4 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
 </project>
