@@ -44,25 +44,18 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<executions>
-					<execution>
-						<id>default-install</id>
-						<phase>none</phase>
-					</execution>
-					<execution>
-						<id>deploy</id>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-						<configuration>
-							<classifier>mule-application</classifier>
-						</configuration>
-					</execution>
-				</executions>
+				  <execution>
+				    <id>deploy</id>
+				    <phase>deploy</phase>
+				    <goals>
+				      <goal>deploy</goal>
+				    </goals>
+				  </execution>
+				</executions>				
 				<configuration>
 					<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<muleVersion>4.4.0</muleVersion>
-						<connectedAppGrantType>client_credentials</connectedAppGrantType>
 						<connectedAppClientId>${connectedApp.clientId}</connectedAppClientId>
 						<connectedAppClientSecret>${connectedApp.clientSecret}</connectedAppClientSecret>
 						<connectedAppGrantType>client_credentials</connectedAppGrantType>
