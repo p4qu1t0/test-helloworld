@@ -42,7 +42,6 @@
 			    <groupId>org.codehaus.mojo</groupId>
 			    <artifactId>exec-maven-plugin</artifactId>
 			    <version>1.2.1</version>
-			    <executions>true</executions>
 			</plugin>
 			<plugin>
 			  <groupId>org.mule.tools.maven</groupId>
