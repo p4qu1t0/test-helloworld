@@ -38,45 +38,34 @@
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>3.0.0</version>
 			</plugin>
-			<plugin>			
-			    <groupId>org.codehaus.mojo</groupId>
-			    <artifactId>exec-maven-plugin</artifactId>
-			    <version>1.2.1</version>
-			</plugin>
 			<plugin>
-			  <groupId>org.mule.tools.maven</groupId>
-			  <artifactId>mule-maven-plugin</artifactId>
-			  <version>3.5.2</version>
-			  <extensions>true</extensions>
-			  <configuration>
-			    <cloudHubDeployment>
-			      <uri>https://anypoint.mulesoft.com</uri>
-			      <muleVersion>4.4.0</muleVersion>
-				<connectedAppClientId>${connectedApp.clientId}</connectedAppClientId>
-				<connectedAppClientSecret>${connectedApp.clientSecret}</connectedAppClientSecret>
-				<connectedAppGrantType>client_credentials</connectedAppGrantType>
-			      <applicationName>${cloudhub.application.name}</applicationName>
-			      <environment>${environment}</environment>
-			      <region>eu-central-1</region>
-			      <workers>1</workers>
-			      <objectStoreV2>true</objectStoreV2>
-			      <workerType>MICRO</workerType>
-			      <properties>
-				<!--api.autodiscoveryid>${cloudhub.api.id}</api.autodiscoveryid>
-				<anypoint.platform.client_id>${cloudhub.env.id}</anypoint.platform.client_id>
-				<anypoint.platform.client_secret>${cloudhub.env.secret}</anypoint.platform.client_secret-->
-			      </properties>
-		    	    </cloudHubDeployment>
-				<sharedLibraries>
-					<sharedLibrary>
-						<groupId>org.codehaus.groovy</groupId>
-						<artifactId>groovy-all</artifactId>
-					</sharedLibrary>				
-				</sharedLibraries>				  
-			  </configuration>
-			</plugin>					
-		</plugins>		
-	</build>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>${mule.maven.plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<cloudHubDeployment>
+					      <uri>https://anypoint.mulesoft.com</uri>
+					      <muleVersion>4.4.0</muleVersion>
+						<connectedAppClientId>${connectedApp.clientId}</connectedAppClientId>
+						<connectedAppClientSecret>${connectedApp.clientSecret}</connectedAppClientSecret>
+						<connectedAppGrantType>client_credentials</connectedAppGrantType>
+					      <applicationName>${cloudhub.application.name}</applicationName>
+					      <environment>${environment}</environment><!-- <environment>DEMO</environment><environment>Sandbox</environment> -->
+					      <region>us-east-2</region><!-- <region>eu-central-1</region>  -->
+					      <workers>1</workers>
+					      <objectStoreV2>true</objectStoreV2>
+					      <workerType>MICRO</workerType>
+					      <properties>
+						<!--api.autodiscoveryid>${cloudhub.api.id}</api.autodiscoveryid>
+						<anypoint.platform.client_id>${cloudhub.env.id}</anypoint.platform.client_id>
+						<anypoint.platform.client_secret>${cloudhub.env.secret}</anypoint.platform.client_secret-->
+					      </properties>
+					</cloudHubDeployment>	
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>	
 	<dependencies>
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
@@ -89,13 +78,7 @@
 			<artifactId>mule-sockets-connector</artifactId>
 			<version>1.2.2</version>
 			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>2.4.16</version>
-			<classifier>indy</classifier>
-		</dependency>		
+		</dependency>	
 	</dependencies>
 	<repositories>
 		<repository>
