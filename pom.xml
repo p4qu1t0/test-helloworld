@@ -49,6 +49,7 @@
 			      <environment>${environment}</environment>
 			      <region>eu-central-1</region>
 			      <workers>1</workers>
+			      <objectStoreV2>true</objectStoreV2>
 			      <workerType>MICRO</workerType>
 			      <properties>
 				<!--api.autodiscoveryid>${cloudhub.api.id}</api.autodiscoveryid>
@@ -57,6 +58,7 @@
 			      </properties>
 			    </cloudHubDeployment>
 			  </configuration>
+			  <classifier>mule-application</classifier>
 			</plugin>					
 		</plugins>
 
