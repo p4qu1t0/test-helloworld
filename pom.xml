@@ -66,8 +66,7 @@
 					<sharedLibrary>
 						<groupId>org.codehaus.groovy</groupId>
 						<artifactId>groovy-all</artifactId>
-					</sharedLibrary>
-					<classifier>mule-application</classifier>					
+					</sharedLibrary>				
 				</sharedLibraries>				  
 			  </configuration>
 			</plugin>					
