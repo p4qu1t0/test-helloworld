@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mycompany</groupId>
 	<artifactId>test-helloword</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<packaging>mule-application</packaging>
 	<name>test-helloworld</name>
 	<properties>
@@ -34,45 +34,30 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.0.0</version>
-			</plugin>
-			<plugin>
-				<groupId>org.mule.tools.maven</groupId>
-				<artifactId>mule-maven-plugin</artifactId>
-				<version>${mule.maven.plugin.version}</version>
-				<extensions>true</extensions>
-				<executions>
-				  <execution>
-				    <id>deploy</id>
-				    <phase>deploy</phase>
-				    <goals>
-				      <goal>deploy</goal>
-				    </goals>
-				  </execution>
-				</executions>				
-				<configuration>
-					<cloudHubDeployment>
-						<uri>https://anypoint.mulesoft.com</uri>
-						<muleVersion>4.4.0</muleVersion>
-						<connectedAppClientId>${connectedApp.clientId}</connectedAppClientId>
-						<connectedAppClientSecret>${connectedApp.clientSecret}</connectedAppClientSecret>
-						<connectedAppGrantType>client_credentials</connectedAppGrantType>
-						<applicationName>${cloudhub.application.name}</applicationName>
-						<environment>${environment}</environment>
-						<region>us-east-2</region>
-						<workers>1</workers>
-						<workerType>MICRO</workerType>
-						<objectStoreV2>true</objectStoreV2>
-						<properties>
-							<api.autodiscoveryid>${cloudhub.api.id}</api.autodiscoveryid>
-							<anypoint.platform.client_id>${cloudhub.env.id}</anypoint.platform.client_id>
-							<anypoint.platform.client_secret>${cloudhub.env.secret}</anypoint.platform.client_secret>
-						</properties>
-					</cloudHubDeployment>
-				</configuration>
-			</plugin>
+			  <groupId>org.mule.tools.maven</groupId>
+			  <artifactId>mule-maven-plugin</artifactId>
+			  <version>3.5.2</version>
+			  <extensions>true</extensions>
+			  <configuration>
+			    <cloudHubDeployment>
+			      <uri>https://anypoint.mulesoft.com</uri>
+			      <muleVersion>4.4.0</muleVersion>
+				<connectedAppClientId>${connectedApp.clientId}</connectedAppClientId>
+				<connectedAppClientSecret>${connectedApp.clientSecret}</connectedAppClientSecret>
+				<connectedAppGrantType>client_credentials</connectedAppGrantType>
+			      <applicationName>${cloudhub.application.name}</applicationName>
+			      <environment>${environment}</environment>
+			      <region>eu-central-1</region>
+			      <workers>1</workers>
+			      <workerType>MICRO</workerType>
+			      <properties>
+				<!--api.autodiscoveryid>${cloudhub.api.id}</api.autodiscoveryid>
+				<anypoint.platform.client_id>${cloudhub.env.id}</anypoint.platform.client_id>
+				<anypoint.platform.client_secret>${cloudhub.env.secret}</anypoint.platform.client_secret-->
+			      </properties>
+			    </cloudHubDeployment>
+			  </configuration>
+			</plugin>					
 		</plugins>
 
 	</build>
