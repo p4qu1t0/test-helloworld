@@ -34,6 +34,11 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>			
+			<plugin>
 			  <groupId>org.mule.tools.maven</groupId>
 			  <artifactId>mule-maven-plugin</artifactId>
 			  <version>3.5.2</version>
@@ -56,12 +61,17 @@
 				<anypoint.platform.client_id>${cloudhub.env.id}</anypoint.platform.client_id>
 				<anypoint.platform.client_secret>${cloudhub.env.secret}</anypoint.platform.client_secret-->
 			      </properties>
-			    </cloudHubDeployment>
+		    	    </cloudHubDeployment>
+				<sharedLibraries>
+					<sharedLibrary>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-all</artifactId>
+					</sharedLibrary>
+					<classifier>mule-application</classifier>					
+				</sharedLibraries>				  
 			  </configuration>
-			  <classifier>mule-application</classifier>
 			</plugin>					
-		</plugins>
-
+		</plugins>		
 	</build>
 	<dependencies>
 		<dependency>
@@ -76,6 +86,12 @@
 			<version>1.2.2</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.4.16</version>
+			<classifier>indy</classifier>
+		</dependency>		
 	</dependencies>
 	<repositories>
 		<repository>
