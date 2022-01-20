@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mycompany</groupId>
 	<artifactId>test-helloword</artifactId>
@@ -60,8 +62,7 @@
 						<properties>
 							<!--api.autodiscoveryid>${cloudhub.api.id}</api.autodiscoveryid>
 						<anypoint.platform.client_id>${cloudhub.env.id}</anypoint.platform.client_id>
-						<anypoint.platform.client_secret>${cloudhub.env.secret}</anypoint.platform.client_secret-->
-						</properties>
+						<anypoint.platform.client_secret>${cloudhub.env.secret}</anypoint.platform.client_secret--></properties>
 					</cloudHubDeployment>
 					<classifier>mule-application</classifier>
 				</configuration>
@@ -84,11 +85,11 @@
 					<coverage>
 						<runCoverage>true</runCoverage>
 						<failBuild>${coverage.failBuild}</failBuild>
-						<requiredApplicationCoverage>70</requiredApplicationCoverage>
-						<requiredResourceCoverage>10</requiredResourceCoverage>
-						<requiredFlowCoverage>5</requiredFlowCoverage>
+						<requiredApplicationCoverage>${coverage.requiredApplicationCoverage}</requiredApplicationCoverage>
+						<requiredResourceCoverage>${coverage.requiredResourceCoverage}</requiredResourceCoverage>
+						<requiredFlowCoverage>${coverage.requiredFlowCoverage}</requiredFlowCoverage>
 						<formats>
-							<format>console</format> 						
+							<format>console</format>
 							<format>html</format>
 						</formats>
 					</coverage>
