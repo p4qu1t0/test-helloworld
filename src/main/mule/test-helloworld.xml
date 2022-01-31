@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="95353cfe-a1f3-445f-9b56-1d786acf5685">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="fb01c56d-0583-477d-94b0-136326ad21ac">
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
-	<global-property doc:name="Global Property" doc:id="71e7862f-e067-4dd2-befc-65072cf4d4d6" name="api.autodiscovery.id" value="12345" />
-	<api-gateway:autodiscovery apiId="${api.autodiscovery.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="fdd29ea6-f58b-46ba-a8c6-31fedf946a5e" flowRef="test-helloworldFlow"/>
-	<flow name="test-helloworldFlow" doc:id="6a4cf574-5af8-4897-9f50-a2e541643b13">
-		<http:listener doc:name="Listener" doc:id="6c5a04c0-58a7-4bdf-94ea-a3204165fbc0" config-ref="HTTP_Listener_config" path="/test" />
-		<ee:transform doc:name="Transform Message" doc:id="d6b3bf06-1147-47f3-afa2-62376a3a446e">
+	<global-property doc:name="Global Property" doc:id="c60d4348-9402-4824-a299-a8b5d55b0026" name="api.autodiscovery.id" value="12345" />
+	<api-gateway:autodiscovery apiId="${api.autodiscovery.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="025e5c58-c91b-4631-87d8-3eb48efd421d" flowRef="test-helloworldFlow"/>
+	<flow name="test-helloworldFlow" doc:id="e1ddfa58-42cd-4256-965a-586ba939c74e">
+		<http:listener doc:name="Listener" doc:id="52437fbf-74ab-4a7b-bdf8-15d36da43a84" config-ref="HTTP_Listener_config" path="/test" />
+		<ee:transform doc:name="Transform Message" doc:id="a04859b9-1573-4628-b0ac-13295643bbac">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0
 output text/plain
@@ -23,12 +25,12 @@ output text/plain
 'This is a helloworld message']]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<choice doc:name="Choice" doc:id="ad25ff9f-b92f-4300-93f6-cd3a500beaf6">
+		<choice doc:name="Choice" doc:id="7c186750-af12-4b12-af50-90a617fb9237">
 			<when expression="#[randomInt(100) &lt; 50]">
-				<logger level="INFO" doc:name="Logger" doc:id="bf9c7c86-ca1c-4939-8804-5259674e65af" message="Path 1" />
+				<logger level="INFO" doc:name="Logger" doc:id="ff1817c3-2de1-4ac4-bf22-c43739a303c0" message="Path 1" />
 			</when>
 			<otherwise>
-				<logger level="INFO" doc:name="Logger" doc:id="03c0c02c-45f4-4aa5-9d75-6279500c195a" message="Path 2" />
+				<logger level="INFO" doc:name="Logger" doc:id="56e66058-72ae-48cb-b7c2-016034136b9c" message="Path 2" />
 			</otherwise>
 		</choice>
 	</flow>
