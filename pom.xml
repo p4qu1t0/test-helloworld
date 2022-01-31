@@ -60,10 +60,11 @@
 						<workers>1</workers>
 						<objectStoreV2>true</objectStoreV2>
 						<workerType>MICRO</workerType>
-						<properties>
-							<!--api.autodiscoveryid>${cloudhub.api.id}</api.autodiscoveryid>
-						<anypoint.platform.client_id>${cloudhub.env.id}</anypoint.platform.client_id>
-						<anypoint.platform.client_secret>${cloudhub.env.secret}</anypoint.platform.client_secret--></properties>
+					    	<properties>
+							<api.autodiscovery.id>${cloudhub.api.id}</api.autodiscovery.id>
+							<!-- anypoint.platform.client_id>${cloudhub.env.id}</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>${cloudhub.env.secret}</anypoint.platform.client_secret-->
+					    	</properties>
 					</cloudHubDeployment>
 					<classifier>mule-application</classifier>
 				</configuration>
