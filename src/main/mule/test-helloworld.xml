@@ -11,6 +11,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="95353cfe-a1f3-445f-9b56-1d786acf5685">
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
+	<global-property doc:name="Global Property" doc:id="71e7862f-e067-4dd2-befc-65072cf4d4d6" name="api.autodiscovery.id" value="12345" />
 	<api-gateway:autodiscovery apiId="${api.autodiscovery.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="fdd29ea6-f58b-46ba-a8c6-31fedf946a5e" flowRef="test-helloworldFlow"/>
 	<flow name="test-helloworldFlow" doc:id="6a4cf574-5af8-4897-9f50-a2e541643b13">
 		<http:listener doc:name="Listener" doc:id="6c5a04c0-58a7-4bdf-94ea-a3204165fbc0" config-ref="HTTP_Listener_config" path="/test" />
